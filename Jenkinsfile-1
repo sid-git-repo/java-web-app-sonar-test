@@ -55,7 +55,7 @@ pipeline {
 
     post {
         always {
-            // Archive reports or perform cleanup
+            sh 'Build finished'
         }
     }
 }
