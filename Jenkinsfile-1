@@ -13,14 +13,49 @@
 //     }
 //   }
 // }
-node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def mvn = tool 'MAVEN_HOME';
-    withSonarQubeEnv() {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-web-app-sonar-test -Dsonar.projectName='java-web-app-sonar-test'"
+// node {
+//   stage('SCM') {
+//     checkout scm
+//   }
+//   stage('SonarQube Analysis') {
+//     def mvn = tool 'MAVEN_HOME';
+//     withSonarQubeEnv() {
+//       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-web-app-sonar-test -Dsonar.projectName='java-web-app-sonar-test'"
+//     }
+//   }
+// }
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.8.7'
     }
-  }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Use the Maven tool installed in Jenkins
+                    sh "${tool 'Maven 3.8.7'}/bin/mvn clean install"
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube') { // Use the SonarQube instance configured in Jenkins
+                        sh "${tool 'Maven 3.8.7'}/bin/mvn sonar:sonar"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive reports or perform cleanup
+        }
+    }
 }
