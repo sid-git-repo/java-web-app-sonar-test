@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube') { // Use the SonarQube instance configured in Jenkins
-                        sh "${tool 'Maven 3.8.7'}/bin/mvn sonar:sonar"
+                        sh "${tool 'MAVEN_HOME'}/bin/mvn sonar:sonar"
                     }
                 }
             }
