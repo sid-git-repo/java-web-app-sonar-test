@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Use the Maven tool installed in Jenkins
-                    sh "${tool 'Maven 3.8.7'}/bin/mvn clean install"
+                    sh "${tool 'MAVEN_HOME'}/bin/mvn clean install"
                 }
             }
         }
