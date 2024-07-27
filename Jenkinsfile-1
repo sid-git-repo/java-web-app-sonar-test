@@ -18,7 +18,7 @@ node {
     checkout scm
   }
   stage('SonarQube Analysis') {
-    def mvn = tool 'MAVEN_HOME;
+    def mvn = tool 'MAVEN_HOME';
     withSonarQubeEnv() {
       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-web-app-sonar-test -Dsonar.projectName='java-web-app-sonar-test'"
     }
